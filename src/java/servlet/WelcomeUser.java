@@ -41,20 +41,20 @@ response.setCharacterEncoding("utf-8");
         JSONObject jObj = new JSONObject(sb.toString());
         DBConnector db= new DBConnector();
          Connection con= db.createDBConnection();
-         if("/WelcomeUser/DeleteEmp".equals(uri))
+         if("/DeleteEmp".equals(uri))
          {
          String UserId = jObj.getString("UserId");   
          DeleteEmp del=new DeleteEmp();
          msg=del.de(con,UserId);
          out.println(constructWelcomeMsg(msg).toString());
          }
-         else if("/WelcomeUser/AddEmployee".equals(uri))
+         else if("/AddEmployee".equals(uri))
          {
              AddEmployee AE=new AddEmployee();
            msg=AE.ae(con,jObj) ;
            out.println(constructWelcomeMsg(msg).toString());
          }
-         else if("/WelcomeUser/SelectEmp".equals(uri))
+         else if("/SelectEmp".equals(uri))
          {
          String UserId = jObj.getString("UserId");  
          SelectEmp se=new SelectEmp();

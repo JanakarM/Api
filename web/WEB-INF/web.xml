@@ -25,19 +25,19 @@
         <url-pattern>/WelcomeUser</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AddEmployee</servlet-name>
+        <servlet-name>WelcomeUser</servlet-name>
         <url-pattern>/AddEmployee</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>DeleteEmp</servlet-name>
+        <servlet-name>WelcomeUser</servlet-name>
         <url-pattern>/DeleteEmp</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SelectEmp</servlet-name>
+        <servlet-name>WelcomeUser</servlet-name>
         <url-pattern>/SelectEmp</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>DBConnector</servlet-name>
+        <servlet-name>WelcomeUser</servlet-name>
         <url-pattern>/DBConnector</url-pattern>
     </servlet-mapping>
     <session-config>
