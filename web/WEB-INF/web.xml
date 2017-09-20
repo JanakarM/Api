@@ -4,29 +4,13 @@
         <servlet-name>WelcomeUser</servlet-name>
         <servlet-class>servlet.WelcomeUser</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>AddEmployee</servlet-name>
-        <servlet-class>servlet.AddEmployee</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>DeleteEmp</servlet-name>
-        <servlet-class>servlet.DeleteEmp</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SelectEmp</servlet-name>
-        <servlet-class>servlet.SelectEmp</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>DBConnector</servlet-name>
-        <servlet-class>servlet.DBConnector</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>WelcomeUser</servlet-name>
         <url-pattern>/WelcomeUser</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>WelcomeUser</servlet-name>
-        <url-pattern>/AddEmployee</url-pattern>
+        <url-pattern>/AddEmp</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>WelcomeUser</servlet-name>
@@ -36,9 +20,9 @@
         <servlet-name>WelcomeUser</servlet-name>
         <url-pattern>/SelectEmp</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
+      <servlet-mapping>
         <servlet-name>WelcomeUser</servlet-name>
-        <url-pattern>/DBConnector</url-pattern>
+        <url-pattern>/AddNotes</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

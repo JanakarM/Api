@@ -18,7 +18,14 @@ public JSONArray se(Connection con,String UserId)
        JSONObject json;
        try
        {
-           sql="select * from emp ";
+           if(UserId.equals(""))
+           {
+           sql="select * from emp";
+           }
+           else
+           {
+              sql="select * from emp where id="+UserId;  
+           }
            ps=con.prepareStatement(sql);
            rs=ps.executeQuery();
            ResultSetMetaData rsmd = rs.getMetaData();
@@ -27,10 +34,11 @@ public JSONArray se(Connection con,String UserId)
            while(rs.next())
            {
                json=new JSONObject();
-               int i=0;
+               int i=1;
                while(i<rsmd.getColumnCount())
                {
                    json.put(rsmd.getColumnLabel(i),rs.getString(i)==null? null:rs.getString(i));
+               i++;
                }
                jarr.put(j++,json);
            }

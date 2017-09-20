@@ -6,12 +6,13 @@
 package servlet;
 
 import java.sql.*;
+import javax.servlet.http.HttpServlet;
 
 /**
  *
  * @author Janakar-PT1585
  */
-public class DeleteEmp  {
+public class DeleteEmp extends HttpServlet  {
 public DeleteEmp()
 {
   
