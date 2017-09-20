@@ -33,7 +33,7 @@ public class AddNotes {
             sql = "insert into notes values('" + o[0] + "'," + o[1] + ")";//"," + o[2] + ",'" + o[3] + "'," + o[4] + "," + o[5] + ",'" + o[6] + "','" + o[7] + "','" + o[8] + "','" + o[9] + "',sha1('"+o[10]+"'))";
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
-            msg = "a note with name = " + o[0] + " was added for the UserId = " + o[1] + " successfully";
+            msg = "a note with name = '" + o[0] + "' was added/shared for the UserId = '" + o[1] + "' successfully";
         } catch (Exception e) {
             return e.toString() + "from an";
         }

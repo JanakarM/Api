@@ -39,7 +39,7 @@ public class DeleteEmp extends HttpServlet {
             ps = con.prepareStatement("delete from emp where id=" + UserId);
             ps.executeUpdate();
 
-            msg = "employee with id='" + UserId + "'is deleted and his notes are removed";
+            msg = "employee with id= '" + UserId + "' is deleted and his notes are removed";
 
         } catch (Exception e) {
             return e.toString() + "from de";

@@ -31,7 +31,7 @@ public class DeleteNotes {
             }
             ps = con.prepareStatement("delete from notes where id=" + UserId + " and name='" + Note + "'");
             ps.executeUpdate();
-            msg = "note with name= "+Note+" for  id='" + UserId + "'is deleted";
+            msg = "note with name= '"+Note+"' for  id= '" + UserId + "'is deleted";
         } catch (Exception e) {
         }
         return msg;

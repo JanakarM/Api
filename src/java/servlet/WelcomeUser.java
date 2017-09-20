@@ -43,23 +43,23 @@ public class WelcomeUser extends HttpServlet {
         String msg = "";
         //logger log=new logger();
         //context.log("");
-         JSONObject jObj =null;
-            JSONArray jarr=null;
+        JSONObject jObj = null;
+        JSONArray jarr = null;
         Logger LOGGER = Logger.getLogger(WelcomeUser.class.getName());
         LOGGER.log(Level.FINE, "processing {0} entries in loop", LOGGER.getName());
         try {
-            
+
             LOGGER.log(Level.FINE, "processing {0} entries in loop", LOGGER.getName());
-try
-{
-            StringBuilder sb = new StringBuilder();
-            BufferedReader br = request.getReader();
-            String str = null;
-            while ((str = br.readLine()) != null) {
-                sb.append(str);
+            try {
+                StringBuilder sb = new StringBuilder();
+                BufferedReader br = request.getReader();
+                String str = null;
+                while ((str = br.readLine()) != null) {
+                    sb.append(str);
+                }
+                jObj = new JSONObject(sb.toString());
+            } catch (Exception e) {
             }
-           jObj= new JSONObject(sb.toString());
-}catch(Exception e){}
             DBConnector db = new DBConnector();
             Connection con = db.createDBConnection();
             if ("/DeleteEmp".equals(uri)) {
@@ -87,6 +87,15 @@ try
                 DeleteNotes del = new DeleteNotes();
                 msg = del.dn(con, Note, (String) request.getSession().getAttribute("UId"));
                 out.println(constructWelcomeMsg(msg).toString());
+            } else if (("/ShareNotes".equals(uri))) {
+                AddNotes AN = new AddNotes();
+                msg = AN.an(con, jObj);
+                out.println(constructWelcomeMsg(msg).toString());
+            }
+            else if("/UpdateEmp".equals(uri))
+            {
+              UpdateEmp UE=new UpdateEmp();
+              msg=UE.ue(con,jObj,(String) request.getSession().getAttribute("UId"));
             }
         } catch (Exception e) {
             json.put("msgEx", e);

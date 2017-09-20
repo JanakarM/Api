@@ -5,7 +5,8 @@
  */
 package servlet;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.Iterator;
 import org.json.JSONObject;
 
@@ -13,13 +14,8 @@ import org.json.JSONObject;
  *
  * @author Janakar-PT1585
  */
-public class AddEmp {
-
-    public AddEmp() {
-
-    }
-
-    public String ae(Connection con, JSONObject json) {
+public class UpdateEmp {
+    public String ae(Connection con, JSONObject json,String UserId) {
         String msg = "";
         PreparedStatement ps = null;
         String[] o = {"", "", "", "", "", "", "", "", "", "", "", ""};
@@ -32,7 +28,7 @@ public class AddEmp {
                 o[i] = json.getString(keys[i]);
                 i++;
             }
-            sql = "insert into emp values('" + o[0] + "',DEFAULT," + o[1] + ",'" + o[2] + "'," + o[3] + "," + o[4] + ",'" + o[5] + "','" + o[6] + "','" + o[7] + "','" + o[8] + "',sha1('" + o[9] + "'))";
+            sql = "update emp set '" + o[0] + "',DEFAULT," + o[1] + ",'" + o[2] + "'," + o[3] + "," + o[4] + ",'" + o[5] + "','" + o[6] + "','" + o[7] + "','" + o[8] + "',sha1('" + o[9] + "'))";
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
             msg = "employee with name=" + o[0] + " was added successfully";
