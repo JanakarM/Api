@@ -24,6 +24,10 @@
         <servlet-name>WelcomeUser</servlet-name>
         <url-pattern>/AddNotes</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WelcomeUser</servlet-name>
+        <url-pattern>/DeleteNotes</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

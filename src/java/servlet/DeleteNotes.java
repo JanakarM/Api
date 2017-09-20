@@ -5,44 +5,34 @@
  */
 package servlet;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.*;
-import javax.servlet.http.HttpServlet;
-
 /**
  *
  * @author Janakar-PT1585
  */
-public class DeleteEmp extends HttpServlet {
+public class DeleteNotes {
 
-    public DeleteEmp() {
-
-    }
-
-    public String de(Connection con, String UserId) {
+    public String dn(Connection con, String Note, String UserId) {
         PreparedStatement ps;
-        ResultSet rs = null;
         String msg = "";
+        ResultSet rs=null;
         try {
-            ps = con.prepareStatement("select * from emp where id=" + UserId);
+             ps = con.prepareStatement("select * from notes where id=" + UserId+ " and name='" + Note + "'");
             rs = ps.executeQuery();
             String check = "";
             try {
                 rs.next();
                 check = rs.getString(1);
             } catch (Exception e) {
-                msg = "no entry for " + UserId;
+                msg = "no note with name = "+Note+" is available for " + UserId;
                 return msg;
             }
-
-            ps = con.prepareStatement("delete from notes where id=" + UserId);
+            ps = con.prepareStatement("delete from notes where id=" + UserId + " and name='" + Note + "'");
             ps.executeUpdate();
-            ps = con.prepareStatement("delete from emp where id=" + UserId);
-            ps.executeUpdate();
-
-            msg = "employee with id='" + UserId + "'is deleted and his notes are removed";
-
+            msg = "note with name= "+Note+" for  id='" + UserId + "'is deleted";
         } catch (Exception e) {
-            return e.toString() + "from de";
         }
         return msg;
     }

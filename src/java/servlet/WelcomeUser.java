@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package servlet;
+
 import static com.sun.faces.facelets.util.Path.context;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -28,75 +29,75 @@ import java.util.logging.Logger;
 import javax.websocket.Session;
 import org.json.JSONArray;
 import javax.servlet.http.HttpSession;
+
 public class WelcomeUser extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         String uri=request.getServletPath();
-       response.setContentType("application/json");
-response.setCharacterEncoding("utf-8");
-        PrintWriter out=response.getWriter(); 
-        JSONObject json=new JSONObject();
-        String msg="";
+        String uri = request.getServletPath();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+        PrintWriter out = response.getWriter();
+        JSONObject json = new JSONObject();
+        String msg = "";
         //logger log=new logger();
         //context.log("");
-         Logger LOGGER = Logger.getLogger( WelcomeUser.class.getName() );
-          LOGGER.log( Level.FINE, "processing {0} entries in loop", LOGGER.getName() );
-        try
-       {
-           LOGGER.log( Level.FINE, "processing {0} entries in loop", LOGGER.getName() );
-          
-          StringBuilder sb = new StringBuilder();
-        BufferedReader br = request.getReader();
-        String str = null;
-        while ((str = br.readLine()) != null) {
-            sb.append(str);
-        }
-        JSONArray jarr;
-        JSONObject jObj = new JSONObject(sb.toString());
-        DBConnector db= new DBConnector();
-         Connection con= db.createDBConnection();
-         if("/DeleteEmp".equals(uri))
-         {
-         String UserId = jObj.getString("UserId");  
-         out.println(UserId);
-         DeleteEmp del=new DeleteEmp();
-         msg=del.de(con,UserId);
-         out.println(constructWelcomeMsg(msg).toString());
-         }
-         else if("/AddEmp".equals(uri))
-         {
-           AddEmp AE=new AddEmp();
-           msg=AE.ae(con,jObj) ;
-           out.println(constructWelcomeMsg(msg).toString());
-         }
-         else if("/SelectEmp".equals(uri))
-         {
-         String UserId = jObj.getString("UserId");  
-         request.getSession(true).setAttribute("UId",UserId);
-         SelectEmp SE=new SelectEmp();
-         jarr=SE.se(con,UserId);
-         out.println(jarr);
-         }
-         else if("/AddNotes".equals(uri))
-         {
-             jObj.put("UserId",request.getSession().getAttribute("UId"));
-             AddNotes AN=new AddNotes();
-             msg=AN.an(con,jObj);
-         }
-       }
-       catch(Exception e)
-       {
-           json.put("msgEx",e);
-           out.println(json.toString());
-       }
-    }
-  private JSONObject constructWelcomeMsg(String msg)
+         JSONObject jObj =null;
+            JSONArray jarr=null;
+        Logger LOGGER = Logger.getLogger(WelcomeUser.class.getName());
+        LOGGER.log(Level.FINE, "processing {0} entries in loop", LOGGER.getName());
+        try {
+            
+            LOGGER.log(Level.FINE, "processing {0} entries in loop", LOGGER.getName());
+try
 {
- JSONObject json = new JSONObject();
- json.put("msg",msg);
-    return json;
-}
-  
+            StringBuilder sb = new StringBuilder();
+            BufferedReader br = request.getReader();
+            String str = null;
+            while ((str = br.readLine()) != null) {
+                sb.append(str);
+            }
+           jObj= new JSONObject(sb.toString());
+}catch(Exception e){}
+            DBConnector db = new DBConnector();
+            Connection con = db.createDBConnection();
+            if ("/DeleteEmp".equals(uri)) {
+                String UserId = (String) request.getSession().getAttribute("UId");
+                DeleteEmp del = new DeleteEmp();
+                msg = del.de(con, UserId);
+                out.println(constructWelcomeMsg(msg).toString());
+            } else if ("/AddEmp".equals(uri)) {
+                AddEmp AE = new AddEmp();
+                msg = AE.ae(con, jObj);
+                out.println(constructWelcomeMsg(msg).toString());
+            } else if ("/SelectEmp".equals(uri)) {
+                String UserId = jObj.getString("UserId");
+                request.getSession(true).setAttribute("UId", UserId);
+                SelectEmp SE = new SelectEmp();
+                jarr = SE.se(con, UserId);
+                out.println(jarr);
+            } else if ("/AddNotes".equals(uri)) {
+                jObj.put("UserId", request.getSession().getAttribute("UId"));
+                AddNotes AN = new AddNotes();
+                msg = AN.an(con, jObj);
+                out.println(constructWelcomeMsg(msg).toString());
+            } else if ("/DeleteNotes".equals(uri)) {
+                String Note = jObj.getString("name");
+                DeleteNotes del = new DeleteNotes();
+                msg = del.dn(con, Note, (String) request.getSession().getAttribute("UId"));
+                out.println(constructWelcomeMsg(msg).toString());
+            }
+        } catch (Exception e) {
+            json.put("msgEx", e);
+            out.println(json.toString());
+        }
+    }
+
+    private JSONObject constructWelcomeMsg(String msg) {
+        JSONObject json = new JSONObject();
+        json.put("msg", msg);
+        return json;
+    }
+
 }
