@@ -36,6 +36,10 @@
         <servlet-name>WelcomeUser</servlet-name>
         <url-pattern>/UpdateEmp</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WelcomeUser</servlet-name>
+        <url-pattern>/SelectNotes</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

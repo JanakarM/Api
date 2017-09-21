@@ -96,6 +96,14 @@ public class WelcomeUser extends HttpServlet {
             {
               UpdateEmp UE=new UpdateEmp();
               msg=UE.ue(con,jObj,(String) request.getSession().getAttribute("UId"));
+                out.println(constructWelcomeMsg(msg).toString());
+            }
+            else if("/SelectNotes".equals(uri))
+            {
+                String UserId = (String) request.getSession().getAttribute("UId");
+                SelectNotes SE=new SelectNotes();
+                jarr=SE.se(con, UserId);
+                out.println(jarr);
             }
         } catch (Exception e) {
             json.put("msgEx", e);

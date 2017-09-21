@@ -15,7 +15,7 @@ import org.json.JSONObject;
  * @author Janakar-PT1585
  */
 public class UpdateEmp {
-    public String ae(Connection con, JSONObject json,String UserId) {
+    public String ue(Connection con, JSONObject json,String UserId) {
         String msg = "";
         PreparedStatement ps = null;
         String[] o = {"", "", "", "", "", "", "", "", "", "", "", ""};
@@ -28,12 +28,12 @@ public class UpdateEmp {
                 o[i] = json.getString(keys[i]);
                 i++;
             }
-            sql = "update emp set '" + o[0] + "',DEFAULT," + o[1] + ",'" + o[2] + "'," + o[3] + "," + o[4] + ",'" + o[5] + "','" + o[6] + "','" + o[7] + "','" + o[8] + "',sha1('" + o[9] + "'))";
+            sql = "update emp set name='" + o[0] + "',age=" + o[1] + ",gender='" + o[2] + "',isregistered=" + o[3] + ",isverified=" + o[4] + ",place='" + o[5] + "',dept='" + o[6] + "',contact='" + o[7] + "',doj='" + o[8] + "',password=sha1('" + o[9] + "') where id="+UserId;
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
-            msg = "employee with name=" + o[0] + " was added successfully";
+            msg = "employee details for the id= '" + UserId + "' was updated successfully";
         } catch (Exception e) {
-            return e.toString() + "from ae";
+            return e.toString() + "from ue";
         }
         return msg;
     }
