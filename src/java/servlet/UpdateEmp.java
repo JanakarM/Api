@@ -15,12 +15,13 @@ import org.json.JSONObject;
  * @author Janakar-PT1585
  */
 public class UpdateEmp {
-    public String ue(Connection con, JSONObject json,String UserId) {
+
+    public String ue(Connection con, JSONObject json, String UserId) {
         String msg = "";
         PreparedStatement ps = null;
         String[] o = {"", "", "", "", "", "", "", "", "", "", "", ""};
         String sql = "";
-        String keys[] = {"name", "age", "gender", "isregistered", "isverified", "place", "dept", "contact", "doj","password"};
+        String keys[] = {"name", "age", "gender", "isregistered", "isverified", "place", "dept", "contact", "doj", "password"};
         try {
             Iterator it = json.keys();
             int i = 0;
@@ -28,7 +29,7 @@ public class UpdateEmp {
                 o[i] = json.getString(keys[i]);
                 i++;
             }
-            sql = "update emp set name='" + o[0] + "',age=" + o[1] + ",gender='" + o[2] + "',isregistered=" + o[3] + ",isverified=" + o[4] + ",place='" + o[5] + "',dept='" + o[6] + "',contact='" + o[7] + "',doj='" + o[8] + "',password=sha1('" + o[9] + "') where id="+UserId;
+            sql = "update emp set name='" + o[0] + "',age=" + o[1] + ",gender='" + o[2] + "',isregistered=" + o[3] + ",isverified=" + o[4] + ",place='" + o[5] + "',dept='" + o[6] + "',contact='" + o[7] + "',doj='" + o[8] + "',password=sha1('" + o[9] + "') where id=" + UserId;
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
             msg = "employee details for the id= '" + UserId + "' was updated successfully";

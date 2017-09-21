@@ -73,13 +73,13 @@ public class WelcomeUser extends HttpServlet {
                 out.println(constructWelcomeMsg(msg).toString());
             } else if ("/SelectEmp".equals(uri)) {
                 SelectEmp SE = new SelectEmp();
-                 String UserId = "";
+                String UserId = "";
                 try {
-                  //  UserId = jObj.getString("UserId");
-                    if (!(UserId=(String)request.getSession().getAttribute("UId")).equals("")) {
-                       
+                    //  UserId = jObj.getString("UserId");
+                    if (!(UserId = (String) request.getSession().getAttribute("UId")).equals("")) {
+
                         //if (UserId.indexOf(',') < 0) {
-                            jarr = SE.se(con, jObj, UserId);
+                        jarr = SE.se(con, jObj, UserId);
                         //}
                     }
                 } catch (Exception e) {

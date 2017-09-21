@@ -17,18 +17,19 @@ import org.json.JSONObject;
  * @author Janakar-PT1585
  */
 public class SelectNotes {
+
     public JSONArray se(Connection con, String UserId) {
         String msg = "";
         String sql = "";
         PreparedStatement ps = null;
         ResultSet rs = null;
         JSONArray jarr = null;
-        JSONObject json=null;
+        JSONObject json = null;
         try {
 //            if (UserId.equals("")) {
 //                sql = "select * from notes";
 //            } else {
-                sql = "select name from notes where id=" + UserId;
+            sql = "select name from notes where id=" + UserId;
             //}
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -46,8 +47,8 @@ public class SelectNotes {
             }
         } catch (Exception e) {
             //e.printStackTrace();
-            json.put("msg",e);
-            jarr.put(0,json);
+            json.put("msg", e);
+            jarr.put(0, json);
             return jarr;
         }
         return jarr;
