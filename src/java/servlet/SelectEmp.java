@@ -64,8 +64,12 @@ public class SelectEmp {
                     return jarr;
                 }
             } else {
-                Iterator it = jso.keys();
                 int i;
+                Iterator it=null;
+                try
+                {
+                it = jso.keys();
+                }catch(Exception e){sql1= "UserId <> "+UserId;}
                 try {
                     while (!(keys = (String) it.next()).equals("")) {
                         o = jso.getString(keys);
@@ -73,13 +77,13 @@ public class SelectEmp {
                             sql1 += keys + " in (" + o + ") or ";
 
                         } else {
-                            sql1 += keys + "=('" + o + "') or ";
+                            sql1 += keys + " in ('" + o + "') or ";
                         }
                         // return jarr;
                     }
                 } catch (Exception e) {//jarr.put(0,"err");
                 }
-                sql1 += "UserId=" + UserId;
+                sql1+= " UserId = "+UserId;
                 sql = "select * from emp where " + sql1;
                 ps = con.prepareStatement(sql);
                 rs = ps.executeQuery();
