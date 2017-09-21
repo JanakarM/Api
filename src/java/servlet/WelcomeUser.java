@@ -72,10 +72,22 @@ public class WelcomeUser extends HttpServlet {
                 msg = AE.ae(con, jObj);
                 out.println(constructWelcomeMsg(msg).toString());
             } else if ("/SelectEmp".equals(uri)) {
-                String UserId = jObj.getString("UserId");
-                request.getSession(true).setAttribute("UId", UserId);
                 SelectEmp SE = new SelectEmp();
-                jarr = SE.se(con, UserId);
+                 String UserId = "";
+                try {
+                  //  UserId = jObj.getString("UserId");
+                    if (!(UserId=(String)request.getSession().getAttribute("UId")).equals("")) {
+                       
+                        //if (UserId.indexOf(',') < 0) {
+                            jarr = SE.se(con, jObj, UserId);
+                        //}
+                    }
+                } catch (Exception e) {
+                    UserId = jObj.getString("UserId");
+                    request.getSession(true).setAttribute("UId", UserId);
+                    // String password=jObj.getString("password");
+                    jarr = SE.se(con, jObj, "-99");
+                }
                 out.println(jarr);
             } else if ("/AddNotes".equals(uri)) {
                 jObj.put("UserId", request.getSession().getAttribute("UId"));
@@ -91,19 +103,19 @@ public class WelcomeUser extends HttpServlet {
                 AddNotes AN = new AddNotes();
                 msg = AN.an(con, jObj);
                 out.println(constructWelcomeMsg(msg).toString());
-            }
-            else if("/UpdateEmp".equals(uri))
-            {
-              UpdateEmp UE=new UpdateEmp();
-              msg=UE.ue(con,jObj,(String) request.getSession().getAttribute("UId"));
+            } else if ("/UpdateEmp".equals(uri)) {
+                UpdateEmp UE = new UpdateEmp();
+                msg = UE.ue(con, jObj, (String) request.getSession().getAttribute("UId"));
                 out.println(constructWelcomeMsg(msg).toString());
-            }
-            else if("/SelectNotes".equals(uri))
-            {
+            } else if ("/SelectNotes".equals(uri)) {
                 String UserId = (String) request.getSession().getAttribute("UId");
-                SelectNotes SE=new SelectNotes();
-                jarr=SE.se(con, UserId);
+                SelectNotes SE = new SelectNotes();
+                jarr = SE.se(con, UserId);
                 out.println(jarr);
+            } else if ("/logout".equals(uri)) {
+                request.getSession().removeAttribute("UID");
+                json.put("msg", "Logged Out");
+                out.println(json.toString());
             }
         } catch (Exception e) {
             json.put("msgEx", e);
