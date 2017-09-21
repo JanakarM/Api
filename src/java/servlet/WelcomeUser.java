@@ -89,21 +89,22 @@ public class WelcomeUser extends HttpServlet {
                     request.getSession(true).setAttribute("UId", UserId);
                     // String password=jObj.getString("password");
                     jarr = SE.se(con, jObj, "-99");
+                      request.getSession(true).setAttribute("UId", UserId);
                 }
                 out.println(jarr);
             } else if ("/AddNotes".equals(uri)) {
                 jObj.put("UserId", request.getSession().getAttribute("UId"));
                 AddNotes AN = new AddNotes();
-                msg = AN.an(con, jObj);
+                msg = AN.an(con, jObj,'w',(String)request.getSession().getAttribute("UId"));
                 out.println(constructWelcomeMsg(msg).toString());
             } else if ("/DeleteNotes".equals(uri)) {
-                String Note = jObj.getString("name");
+                String Note = jObj.getString("id");
                 DeleteNotes del = new DeleteNotes();
-                msg = del.dn(con, Note, (String) request.getSession().getAttribute("UId"));
+                msg = del.dn(con, Note);
                 out.println(constructWelcomeMsg(msg).toString());
             } else if (("/ShareNotes".equals(uri))) {
                 AddNotes AN = new AddNotes();
-                msg = AN.an(con, jObj);
+                msg = AN.an(con, jObj,'r',(String) request.getSession().getAttribute("UId"));
                 out.println(constructWelcomeMsg(msg).toString());
             } else if ("/UpdateEmp".equals(uri)) {
                 UpdateEmp UE = new UpdateEmp();
@@ -120,6 +121,13 @@ public class WelcomeUser extends HttpServlet {
                 request.getSession(false).removeAttribute("UId");
                 json.put("msg", "Logged Out");
                 out.println(json.toString());
+            }
+            else if("/UpdateNotes".equals(uri))
+            {
+                 //String Note = jObj.getString("id");
+                UpdateNotes UN = new UpdateNotes();
+                msg = UN.un(con,jObj);
+                out.println(constructWelcomeMsg(msg).toString());
             }
         } catch (Exception e) {
             json.put("msgEx", e);

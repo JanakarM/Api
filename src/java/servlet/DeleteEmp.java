@@ -22,21 +22,31 @@ public class DeleteEmp extends HttpServlet {
         PreparedStatement ps;
         ResultSet rs = null;
         String msg = "";
+        String sql1 = "";
+        String sql = "";
         try {
-            ps = con.prepareStatement("select * from emp where UserId=" + UserId);
-            rs = ps.executeQuery();
-            String check = "";
-            try {
-                rs.next();
-                check = rs.getString(1);
-            } catch (Exception e) {
-                msg = "no entry for " + UserId;
-                return msg;
+           sql="select distinct(id) from registry where userid=" + UserId;
+           try
+            {
+                 ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();            
+                while(rs.next())
+            {
+                sql1+=rs.getString(1);
+                if(rs.next())
+                {
+                    sql1+=",";
+                    rs.previous();
+                }
+            }
+            }catch(Exception e1)
+            {
+                return UserId+" "+e1.toString();
             }
 
-            ps = con.prepareStatement("delete from notes where UserId=" + UserId);
+            ps = con.prepareStatement("delete from registry where id in (" + sql1+")");
             ps.executeUpdate();
-            ps = con.prepareStatement("delete from emp where UserId=" + UserId);
+            ps = con.prepareStatement("delete from notes where id in (" + sql1+")");
             ps.executeUpdate();
 
             msg = "employee with UserId= '" + UserId + "' is deleted and his notes are removed";
