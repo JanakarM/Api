@@ -29,7 +29,7 @@ public class SelectNotes {
 //            if (UserId.equals("")) {
 //                sql = "select * from notes";
 //            } else {
-            sql = "select name from notes where id=" + UserId;
+            sql = "select name from notes where UserId=" + UserId;
             //}
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();

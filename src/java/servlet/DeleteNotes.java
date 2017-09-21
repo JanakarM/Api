@@ -20,7 +20,7 @@ public class DeleteNotes {
         String msg = "";
         ResultSet rs = null;
         try {
-            ps = con.prepareStatement("select * from notes where id=" + UserId + " and name='" + Note + "'");
+            ps = con.prepareStatement("select * from notes where Userid=" + UserId + " and name='" + Note + "'");
             rs = ps.executeQuery();
             String check = "";
             try {
@@ -30,9 +30,9 @@ public class DeleteNotes {
                 msg = "no note with name = " + Note + " is available for " + UserId;
                 return msg;
             }
-            ps = con.prepareStatement("delete from notes where id=" + UserId + " and name='" + Note + "'");
+            ps = con.prepareStatement("delete from notes where Userid=" + UserId + " and name='" + Note + "'");
             ps.executeUpdate();
-            msg = "note with name= '" + Note + "' for  id= '" + UserId + "'is deleted";
+            msg = "note with name= '" + Note + "' for  Userid= '" + UserId + "'is deleted";
         } catch (Exception e) {
         }
         return msg;

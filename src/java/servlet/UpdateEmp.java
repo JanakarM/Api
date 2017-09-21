@@ -29,10 +29,10 @@ public class UpdateEmp {
                 o[i] = json.getString(keys[i]);
                 i++;
             }
-            sql = "update emp set name='" + o[0] + "',age=" + o[1] + ",gender='" + o[2] + "',isregistered=" + o[3] + ",isverified=" + o[4] + ",place='" + o[5] + "',dept='" + o[6] + "',contact='" + o[7] + "',doj='" + o[8] + "',password=sha1('" + o[9] + "') where id=" + UserId;
+            sql = "update emp set name='" + o[0] + "',age=" + o[1] + ",gender='" + o[2] + "',isregistered=" + o[3] + ",isverified=" + o[4] + ",place='" + o[5] + "',dept='" + o[6] + "',contact='" + o[7] + "',doj='" + o[8] + "',password=sha1('" + o[9] + "') where UserId=" + UserId;
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
-            msg = "employee details for the id= '" + UserId + "' was updated successfully";
+            msg = "employee details for the UserId= '" + UserId + "' was updated successfully";
         } catch (Exception e) {
             return e.toString() + "from ue";
         }

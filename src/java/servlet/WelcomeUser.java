@@ -49,7 +49,7 @@ public class WelcomeUser extends HttpServlet {
         LOGGER.log(Level.FINE, "processing {0} entries in loop", LOGGER.getName());
         try {
 
-            LOGGER.log(Level.FINE, "processing {0} entries in loop", LOGGER.getName());
+            LOGGER.log(Level.FINE, "processing {0} entries in loop");
             try {
                 StringBuilder sb = new StringBuilder();
                 BufferedReader br = request.getReader();
@@ -58,6 +58,7 @@ public class WelcomeUser extends HttpServlet {
                     sb.append(str);
                 }
                 jObj = new JSONObject(sb.toString());
+                LOGGER.log(Level.FINE, jObj.toString());
             } catch (Exception e) {
             }
             DBConnector db = new DBConnector();
@@ -73,16 +74,17 @@ public class WelcomeUser extends HttpServlet {
                 out.println(constructWelcomeMsg(msg).toString());
             } else if ("/SelectEmp".equals(uri)) {
                 SelectEmp SE = new SelectEmp();
-                String UserId = "";
+                String UserId;
                 try {
                     //  UserId = jObj.getString("UserId");
-                    if (!(UserId = (String) request.getSession().getAttribute("UId")).equals("")) {
-
+                    if (!((String) request.getSession().getAttribute("UId")).equals("")) {
+                        UserId = (String) request.getSession().getAttribute("UId");
                         //if (UserId.indexOf(',') < 0) {
                         jarr = SE.se(con, jObj, UserId);
                         //}
                     }
                 } catch (Exception e) {
+
                     UserId = jObj.getString("UserId");
                     request.getSession(true).setAttribute("UId", UserId);
                     // String password=jObj.getString("password");
@@ -113,7 +115,7 @@ public class WelcomeUser extends HttpServlet {
                 jarr = SE.se(con, UserId);
                 out.println(jarr);
             } else if ("/logout".equals(uri)) {
-                request.getSession().removeAttribute("UID");
+                request.getSession().removeAttribute("UId");
                 json.put("msg", "Logged Out");
                 out.println(json.toString());
             }

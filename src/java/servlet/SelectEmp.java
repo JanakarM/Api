@@ -45,7 +45,7 @@ public class SelectEmp {
                 jarr = new JSONArray();
                 UserId = jso.getString("UserId");
                 String password = jso.getString("password");
-                sql = "select * from emp where id=" + UserId + " and password=sha1('" + password + "')";
+                sql = "select * from emp where UserId=" + UserId + " and password=sha1('" + password + "')";
                 ps = con.prepareStatement(sql);
                 rs = ps.executeQuery();
                 try {
@@ -65,11 +65,13 @@ public class SelectEmp {
                 }
             } else {
                 int i;
-                Iterator it=null;
-                try
-                {
-                it = jso.keys();
-                }catch(Exception e){sql1= "UserId <> "+UserId;}
+                Iterator it = null;
+                try {
+                    it = jso.keys();
+                    it.hashCode();
+                } catch (Exception e) {
+                    sql1 = "UserId <> " + UserId;
+                }
                 try {
                     while (!(keys = (String) it.next()).equals("")) {
                         o = jso.getString(keys);
@@ -82,8 +84,9 @@ public class SelectEmp {
                         // return jarr;
                     }
                 } catch (Exception e) {//jarr.put(0,"err");
+                    sql1 += " UserId = " + UserId;
                 }
-                sql1+= " UserId = "+UserId;
+
                 sql = "select * from emp where " + sql1;
                 ps = con.prepareStatement(sql);
                 rs = ps.executeQuery();

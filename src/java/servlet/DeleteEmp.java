@@ -23,7 +23,7 @@ public class DeleteEmp extends HttpServlet {
         ResultSet rs = null;
         String msg = "";
         try {
-            ps = con.prepareStatement("select * from emp where id=" + UserId);
+            ps = con.prepareStatement("select * from emp where UserId=" + UserId);
             rs = ps.executeQuery();
             String check = "";
             try {
@@ -34,12 +34,12 @@ public class DeleteEmp extends HttpServlet {
                 return msg;
             }
 
-            ps = con.prepareStatement("delete from notes where id=" + UserId);
+            ps = con.prepareStatement("delete from notes where UserId=" + UserId);
             ps.executeUpdate();
-            ps = con.prepareStatement("delete from emp where id=" + UserId);
+            ps = con.prepareStatement("delete from emp where UserId=" + UserId);
             ps.executeUpdate();
 
-            msg = "employee with id= '" + UserId + "' is deleted and his notes are removed";
+            msg = "employee with UserId= '" + UserId + "' is deleted and his notes are removed";
 
         } catch (Exception e) {
             return e.toString() + "from de";
