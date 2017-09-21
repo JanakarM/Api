@@ -24,7 +24,7 @@ public class AddEmp {
         PreparedStatement ps = null;
         String[] o = {"", "", "", "", "", "", "", "", "", "", "", ""};
         String sql = "";
-        String keys[] = {"name", "age", "gender", "isregistered", "isverified", "place", "dept", "contact", "doj","password"};
+        String keys[] = {"name", "age", "gender", "isregistered", "isverified", "place", "dept", "contact", "doj", "password"};
         try {
             Iterator it = json.keys();
             int i = 0;

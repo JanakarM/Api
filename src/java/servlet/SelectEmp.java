@@ -68,13 +68,12 @@ public class SelectEmp {
                 Iterator it = null;
                 try {
                     it = jso.keys();
-                    if(jso.toString().equals(null))
-                    {
-                        int a=0;
+                    if (jso.toString().equals(null)) {
+                        int a = 0;
                     }
                 } catch (Exception e) {
-                    
-                    sql1 = " UserId <> " + UserId+" or ";
+
+                    sql1 = " UserId <> " + UserId + " or ";
                 }
                 try {
                     while (!(keys = (String) it.next()).equals("")) {

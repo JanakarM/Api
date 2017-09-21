@@ -25,41 +25,34 @@ public class DeleteEmp extends HttpServlet {
         String sql1 = "";
         String sql = "";
         try {
-            try
-            {
-            sql="delete from emp where UserId = " + UserId ;
-             ps = con.prepareStatement(sql);
-            ps.executeUpdate();
+            try {
+                sql = "delete from emp where UserId = " + UserId;
+                ps = con.prepareStatement(sql);
+                ps.executeUpdate();
+            } catch (Exception e8) {
+                return e8.toString() + "e8";
             }
-            catch(Exception e8)
-            {
-                return e8.toString()+"e8";
-            }
-           sql="select distinct(id) from registry where userid=" + UserId;
-           try
-            {
-                
-                 ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();            
-                while(rs.next())
-            {
-                sql1+=rs.getString(1);
-                if(rs.next())
-                {
-                    sql1+=",";
-                    rs.previous();
+            sql = "select distinct(id) from registry where userid=" + UserId;
+            try {
+
+                ps = con.prepareStatement(sql);
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    sql1 += rs.getString(1);
+                    if (rs.next()) {
+                        sql1 += ",";
+                        rs.previous();
+                    }
                 }
-            }
-            }catch(Exception e1)
-            {
-                return UserId+" "+e1.toString();
+            } catch (Exception e1) {
+                return UserId + " " + e1.toString();
             }
 
-            ps = con.prepareStatement("delete from registry where id in (" + sql1+")");
+            ps = con.prepareStatement("delete from registry where id in (" + sql1 + ")");
             ps.executeUpdate();
-            ps = con.prepareStatement("delete from notes where id in (" + sql1+")");
+            ps = con.prepareStatement("delete from notes where id in (" + sql1 + ")");
             ps.executeUpdate();
-           
+
             msg = "employee with UserId= '" + UserId + "' is deleted and his notes are removed";
 
         } catch (Exception e) {
