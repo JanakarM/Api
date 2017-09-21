@@ -67,7 +67,10 @@ public class WelcomeUser extends HttpServlet {
                 String UserId = (String) request.getSession().getAttribute("UId");
                 DeleteEmp del = new DeleteEmp();
                 msg = del.de(con, UserId);
-                out.println(constructWelcomeMsg(msg).toString());
+                 request.getSession(false).removeAttribute("UId");
+                json.put("msg", "Logged Out");
+               // out.println();
+                out.println(constructWelcomeMsg(msg).toString()+json.toString());
             } else if ("/AddEmp".equals(uri)) {
                 AddEmp AE = new AddEmp();
                 msg = AE.ae(con, jObj);
