@@ -68,9 +68,13 @@ public class SelectEmp {
                 Iterator it = null;
                 try {
                     it = jso.keys();
-                    it.hashCode();
+                    if(jso.toString().equals(null))
+                    {
+                        int a=0;
+                    }
                 } catch (Exception e) {
-                    sql1 = "UserId <> " + UserId;
+                    
+                    sql1 = " UserId <> " + UserId+" or ";
                 }
                 try {
                     while (!(keys = (String) it.next()).equals("")) {
@@ -81,7 +85,7 @@ public class SelectEmp {
                         } else {
                             sql1 += keys + " in ('" + o + "') or ";
                         }
-                        // return jarr;
+                        //return jarr;
                     }
                 } catch (Exception e) {//jarr.put(0,"err");
                     sql1 += " UserId = " + UserId;

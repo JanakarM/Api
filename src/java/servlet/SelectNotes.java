@@ -18,7 +18,7 @@ import org.json.JSONObject;
  */
 public class SelectNotes {
 
-    public JSONArray se(Connection con, String UserId) {
+    public JSONArray sn(Connection con, String UserId) {
         String msg = "";
         String sql = "";
         PreparedStatement ps = null;
@@ -47,7 +47,7 @@ public class SelectNotes {
             }
         } catch (Exception e) {
             //e.printStackTrace();
-            json.put("msg", e);
+            json.put("msg", e+" from sn");
             jarr.put(0, json);
             return jarr;
         }

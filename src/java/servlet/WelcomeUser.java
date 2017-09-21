@@ -110,12 +110,14 @@ public class WelcomeUser extends HttpServlet {
                 msg = UE.ue(con, jObj, (String) request.getSession().getAttribute("UId"));
                 out.println(constructWelcomeMsg(msg).toString());
             } else if ("/SelectNotes".equals(uri)) {
-                String UserId = (String) request.getSession().getAttribute("UId");
-                SelectNotes SE = new SelectNotes();
-                jarr = SE.se(con, UserId);
+                String UserId="";
+                UserId = (String) request.getSession().getAttribute("UId");
+                SelectNotes SE1 = new SelectNotes();
+                jarr = SE1.sn(con, UserId);
                 out.println(jarr);
+                
             } else if ("/logout".equals(uri)) {
-                request.getSession().removeAttribute("UId");
+                request.getSession(false).removeAttribute("UId");
                 json.put("msg", "Logged Out");
                 out.println(json.toString());
             }
