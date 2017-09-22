@@ -1,34 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlet;
 
-import static com.sun.faces.facelets.util.Path.context;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.nio.file.Files.list;
-import static java.rmi.Naming.list;
-import java.util.Enumeration;
-import java.util.Iterator;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 import java.sql.*;
-import static java.util.Collections.list;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.websocket.Session;
+import java.util.logging.*;
 import org.json.JSONArray;
-import javax.servlet.http.HttpSession;
+import org.json.JSONException;
 
 public class WelcomeUser extends HttpServlet {
 
@@ -40,9 +23,7 @@ public class WelcomeUser extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         PrintWriter out = response.getWriter();
         JSONObject json = new JSONObject();
-        String msg = "";
-        //logger log=new logger();
-        //context.log("");
+        String msg;
         JSONObject jObj = null;
         JSONArray jarr = null;
         Logger LOGGER = Logger.getLogger(WelcomeUser.class.getName());
@@ -53,82 +34,102 @@ public class WelcomeUser extends HttpServlet {
             try {
                 StringBuilder sb = new StringBuilder();
                 BufferedReader br = request.getReader();
-                String str = null;
+                String str;
                 while ((str = br.readLine()) != null) {
                     sb.append(str);
                 }
                 jObj = new JSONObject(sb.toString());
                 LOGGER.log(Level.FINE, jObj.toString());
-            } catch (Exception e) {
+            } catch (IOException | JSONException e) {
             }
             DBConnector db = new DBConnector();
             Connection con = db.createDBConnection();
-            if ("/DeleteEmp".equals(uri)) {
-                String UserId = (String) request.getSession().getAttribute("UId");
-                DeleteEmp del = new DeleteEmp();
-                msg = del.de(con, UserId);
-                request.getSession(false).removeAttribute("UId");
-                json.put("msg", "Logged Out");
-                // out.println();
-                out.println(constructWelcomeMsg(msg).toString() + json.toString());
-            } else if ("/AddEmp".equals(uri)) {
-                AddEmp AE = new AddEmp();
-                msg = AE.ae(con, jObj);
-                out.println(constructWelcomeMsg(msg).toString());
-            } else if ("/SelectEmp".equals(uri)) {
-                SelectEmp SE = new SelectEmp();
-                String UserId;
-                try {
-                    //  UserId = jObj.getString("UserId");
-                    if (!((String) request.getSession().getAttribute("UId")).equals("")) {
-                        UserId = (String) request.getSession().getAttribute("UId");
-                        //if (UserId.indexOf(',') < 0) {
-                        jarr = SE.se(con, jObj, UserId);
-                        //}
+            if (null != uri) {
+                switch (uri) {
+                    case "/DeleteEmp": {
+                        String UserId = (String) request.getSession().getAttribute("UId");
+                        DeleteEmp del = new DeleteEmp();
+                        msg = del.de(con, UserId);
+                        request.getSession(false).removeAttribute("UId");
+                        json.put("msg", "Logged Out");
+                        // out.println();
+                        out.println(constructWelcomeMsg(msg).toString() + json.toString());
+                        break;
                     }
-                } catch (Exception e) {
+                    case "/AddEmp":
+                        AddEmp AE = new AddEmp();
+                        msg = AE.ae(con, jObj);
+                        out.println(constructWelcomeMsg(msg).toString());
+                        break;
+                    case "/SelectEmp": {
+                        SelectEmp SE = new SelectEmp();
+                        String UserId;
+                        try {
+                            //  UserId = jObj.getString("UserId");
+                            if (!((String) request.getSession().getAttribute("UId")).equals("")) {
+                                UserId = (String) request.getSession().getAttribute("UId");
+                                //if (UserId.indexOf(',') < 0) {
+                                jarr = SE.se(con, jObj, UserId);
+                                //}
+                            }
+                        } catch (Exception e) {
 
-                    UserId = jObj.getString("UserId");
-                    request.getSession(true).setAttribute("UId", UserId);
-                    // String password=jObj.getString("password");
-                    jarr = SE.se(con, jObj, "-99");
-                    request.getSession(true).setAttribute("UId", UserId);
+                            UserId = jObj.getString("UserId");
+                            request.getSession(true).setAttribute("UId", UserId);
+                            // String password=jObj.getString("password");
+                            jarr = SE.se(con, jObj, "-99");
+                            request.getSession(true).setAttribute("UId", UserId);
+                        }
+                        out.println(jarr);
+                        break;
+                    }
+                    case "/AddNotes": {
+                        jObj.put("UserId", request.getSession().getAttribute("UId"));
+                        AddNotes AN = new AddNotes();
+                        msg = AN.an(con, jObj, 'w', (String) request.getSession().getAttribute("UId"));
+                        out.println(constructWelcomeMsg(msg).toString());
+                        break;
+                    }
+                    case "/DeleteNotes": {
+                        String Note = jObj.getString("id");
+                        DeleteNotes del = new DeleteNotes();
+                        msg = del.dn(con, Note, (String) request.getSession().getAttribute("UId"));
+                        out.println(constructWelcomeMsg(msg).toString());
+                        break;
+                    }
+                    case "/ShareNotes": {
+                        AddNotes AN = new AddNotes();
+                        msg = AN.an(con, jObj, 'r', (String) request.getSession().getAttribute("UId"));
+                        out.println(constructWelcomeMsg(msg).toString());
+                        break;
+                    }
+                    case "/UpdateEmp":
+                        UpdateEmp UE = new UpdateEmp();
+                        msg = UE.ue(con, jObj, (String) request.getSession().getAttribute("UId"));
+                        out.println(constructWelcomeMsg(msg).toString());
+                        break;
+                    case "/SelectNotes": {
+                        String UserId;
+                        UserId = (String) request.getSession().getAttribute("UId");
+                        SelectNotes SE1 = new SelectNotes();
+                        jarr = SE1.sn(con, UserId);
+                        out.println(jarr);
+                        break;
+                    }
+                    case "/logout":
+                        request.getSession(false).removeAttribute("UId");
+                        json.put("msg", "Logged Out");
+                        out.println(json.toString());
+                        break;
+                    case "/UpdateNotes":
+                        //String Note = jObj.getString("id");
+                        UpdateNotes UN = new UpdateNotes();
+                        msg = UN.un(con, jObj, (String) request.getSession().getAttribute("UId"));
+                        out.println(constructWelcomeMsg(msg).toString());
+                        break;
+                    default:
+                        break;
                 }
-                out.println(jarr);
-            } else if ("/AddNotes".equals(uri)) {
-                jObj.put("UserId", request.getSession().getAttribute("UId"));
-                AddNotes AN = new AddNotes();
-                msg = AN.an(con, jObj, 'w', (String) request.getSession().getAttribute("UId"));
-                out.println(constructWelcomeMsg(msg).toString());
-            } else if ("/DeleteNotes".equals(uri)) {
-                String Note = jObj.getString("id");
-                DeleteNotes del = new DeleteNotes();
-                msg = del.dn(con, Note,(String) request.getSession().getAttribute("UId"));
-                out.println(constructWelcomeMsg(msg).toString());
-            } else if (("/ShareNotes".equals(uri))) {
-                AddNotes AN = new AddNotes();
-                msg = AN.an(con, jObj, 'r', (String) request.getSession().getAttribute("UId"));
-                out.println(constructWelcomeMsg(msg).toString());
-            } else if ("/UpdateEmp".equals(uri)) {
-                UpdateEmp UE = new UpdateEmp();
-                msg = UE.ue(con, jObj, (String) request.getSession().getAttribute("UId"));
-                out.println(constructWelcomeMsg(msg).toString());
-            } else if ("/SelectNotes".equals(uri)) {
-                String UserId = "";
-                UserId = (String) request.getSession().getAttribute("UId");
-                SelectNotes SE1 = new SelectNotes();
-                jarr = SE1.sn(con, UserId);
-                out.println(jarr);
-
-            } else if ("/logout".equals(uri)) {
-                request.getSession(false).removeAttribute("UId");
-                json.put("msg", "Logged Out");
-                out.println(json.toString());
-            } else if ("/UpdateNotes".equals(uri)) {
-                //String Note = jObj.getString("id");
-                UpdateNotes UN = new UpdateNotes();
-                msg = UN.un(con, jObj,(String) request.getSession().getAttribute("UId"));
-                out.println(constructWelcomeMsg(msg).toString());
             }
         } catch (Exception e) {
             json.put("msgEx", e);

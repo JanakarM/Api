@@ -9,36 +9,28 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.*;
 
-/**
- *
- * @author Janakar-PT1585
- */
 public class DeleteNotes {
 
-    public String dn(Connection con, String Note,String UserId) {
+    public String dn(Connection con, String Note, String UserId) {
         PreparedStatement ps;
-        char perm='\0';
+        char perm = '\0';
         String msg = "";
         ResultSet rs = null;
         try {
-            ps = con.prepareStatement("select permission from registry where id=" + Note +" and userid="+UserId); //+ " and name='" + Note + "'");
+            ps = con.prepareStatement("select permission from registry where id=" + Note + " and userid=" + UserId); //+ " and name='" + Note + "'");
             rs = ps.executeQuery();
             String check = "";
             try {
-               if(rs.next())
-               {
-                   perm=rs.getString(1).toCharArray()[0];
-               }
+                if (rs.next()) {
+                    perm = rs.getString(1).toCharArray()[0];
+                }
             } catch (Exception e) {
                 msg = "no note with id = " + Note + " is available";
                 return msg;
             }
-            if(perm=='r')
-            {
+            if (perm == 'r') {
                 return "no write permissions granted";
             }
-            ps = con.prepareStatement("delete from registry where id=" + Note);//+ " and name='" + Note + "'");
-            ps.executeUpdate();
             ps = con.prepareStatement("delete from notes where id=" + Note);//+ " and name='" + Note + "'");
             ps.executeUpdate();
             msg = "note with id= '" + Note + "' is deleted";

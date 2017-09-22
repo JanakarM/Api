@@ -23,18 +23,16 @@ public class AddNotes {
         ResultSet rs = null;
         String[] o = {"", "", "", "", ""};
         String sql = "";
-        String keys[] = {"name", "UserId", "contents"};//, "age", "gender", "isregistered", "isverified", "place", "dept", "contact", "doj"};
+        String keys[] = {"name", "UserId", "contents"};
         try {
-            //Iterator it = json.keys();
-            int i = 0;
+                 int i = 0;
             while (i < 2) {
                 o[i] = json.getString(keys[i]);
                 i++;
-                // return o[0];
             }
             if (perm == 'w') {
                 o[2] = json.getString(keys[2]);
-                sql = "insert into notes values('" + o[0] + "_" + o[1] + "',DEFAULT,'" + o[2] + "')";//"," + o[2] + ",'" + o[3] + "'," + o[4] + "," + o[5] + ",'" + o[6] + "','" + o[7] + "','" + o[8] + "','" + o[9] + "',sha1('"+o[10]+"'))";
+                sql = "insert into notes values('" + o[0] + "_" + o[1] + "',DEFAULT,'" + o[2] + "',"+UserId+")";
                 ps = con.prepareStatement(sql);
                 ps.executeUpdate();
             }

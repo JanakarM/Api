@@ -3,14 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/janakar-pt1585/Documents/NetBeansProjects/ApiPurpose/src/java/servlet/SelectNotes.java</file>
             <file>file:/C:/Users/janakar-pt1585/Documents/NetBeansProjects/ApiPurpose/src/java/servlet/AddEmp.java</file>
             <file>file:/C:/Users/janakar-pt1585/Documents/NetBeansProjects/ApiPurpose/src/java/servlet/DeleteNotes.java</file>
-            <file>file:/C:/Users/janakar-pt1585/Documents/NetBeansProjects/ApiPurpose/src/java/servlet/SelectEmp.java</file>
             <file>file:/C:/Users/janakar-pt1585/Documents/NetBeansProjects/ApiPurpose/src/java/servlet/UpdateEmp.java</file>
+            <file>file:/C:/Users/janakar-pt1585/Documents/NetBeansProjects/ApiPurpose/src/java/servlet/SelectEmp.java</file>
             <file>file:/C:/Users/janakar-pt1585/Documents/NetBeansProjects/ApiPurpose/src/java/servlet/DBConnector.java</file>
             <file>file:/C:/Users/janakar-pt1585/Documents/NetBeansProjects/ApiPurpose/src/java/servlet/WelcomeUser.java</file>
             <file>file:/C:/Users/janakar-pt1585/Documents/NetBeansProjects/ApiPurpose/web/WEB-INF/web.xml</file>
             <file>file:/C:/Users/janakar-pt1585/Documents/NetBeansProjects/ApiPurpose/src/java/servlet/AddNotes.java</file>
+            <file>file:/C:/Users/janakar-pt1585/Documents/NetBeansProjects/ApiPurpose/src/java/servlet/UpdateNotes.java</file>
             <file>file:/C:/Users/janakar-pt1585/Documents/NetBeansProjects/ApiPurpose/src/java/servlet/DeleteEmp.java</file>
         </group>
     </open-files>
