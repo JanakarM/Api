@@ -43,4 +43,7 @@ UpdateQuery where(String columnName, in_condition condition1, String[] values)
     this.condition=sq.condition;
     return this;
 }
+String getSql() {
+        return this.sql;
+    }
 }

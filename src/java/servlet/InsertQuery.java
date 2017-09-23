@@ -1,6 +1,8 @@
 
 package servlet;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.HashMap;
 
 
@@ -72,5 +74,24 @@ public class InsertQuery {
         }
         this.sql+=" values "+"("+value+")";
         return this;
+    }
+    String insert()
+    {
+        String msg="";
+         try {
+            DBConnector db = new DBConnector();
+            Connection con = db.createDBConnection();
+            PreparedStatement ps = con.prepareStatement(this.sql);
+            ps.executeUpdate();
+            msg="user was added successfully";
+         }
+         catch(Exception e)
+         {
+             msg=e.toString();
+         }
+        return msg;
+    }
+    String getSql() {
+        return this.sql;
     }
 }

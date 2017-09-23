@@ -24,20 +24,22 @@ public class AddEmp {
         PreparedStatement ps = null;
         String[] o = {"", "", "", "", "", "", "", "", "", "", "", ""};
         String sql = "";
-        String keys[] = {"name", "age", "gender", "isregistered", "isverified", "place", "dept", "contact", "doj", "password"};
-        try {
-            Iterator it = json.keys();
+        String columns[]=new String[12];
+        String values[]=new String[12];
+        String keys;
+     try {
+         Iterator it = json.keys();
             int i = 0;
-            while (i < 10) {
-                o[i] = json.getString(keys[i]);
+            while (it.hasNext()) {
+               keys=(String)it.next();
+               columns[i]=keys;
+               values[i]=json.getString(keys);
                 i++;
             }
-            sql = "insert into emp values('" + o[0] + "',DEFAULT," + o[1] + ",'" + o[2] + "'," + o[3] + "," + o[4] + ",'" + o[5] + "','" + o[6] + "','" + o[7] + "','" + o[8] + "',sha1('" + o[9] + "'))";
-            ps = con.prepareStatement(sql);
-            ps.executeUpdate();
-            msg = "employee with name=" + o[0] + " was added successfully";
-        } catch (Exception e) {
-            return e.toString() + "from ae";
+           msg=new InsertQuery("emp").specifyColumns(columns).values(values).insert();
+        } 
+     catch (Exception e) {
+            msg=e.toString() + "from ae";
         }
         return msg;
     }
