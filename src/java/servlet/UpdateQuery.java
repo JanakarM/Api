@@ -21,7 +21,12 @@ UpdateQuery(String table)
 }
 UpdateQuery set(String column,String value)
 {
-    this.sql+=" set "+column+" = "+value;
+    InsertQuery iq=new InsertQuery();
+    iq.hMap();
+    if(iq.type.get("column").equals("String"))
+        this.sql+=" set "+column+" = "+"'"+value+"'";
+    else
+        this.sql+=" set "+column+" = "+value;
     return this;
 }
 UpdateQuery where(String columnName, conditions condition, String value)
